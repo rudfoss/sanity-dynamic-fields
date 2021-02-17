@@ -184,14 +184,27 @@ export type SanityValidatorFunction<
 	context: SanityValidatorContext<TDocument, TParentFieldType>
 ) => SanityValidatorFunctionResult | Promise<SanityValidatorFunctionResult>
 
-export interface SanityPatch<TValueType = any> {
+export interface SanityPatchEvent<TValueType = any> {
 	type: "set" | "unset" | "setIfMissing"
 	path?: string[]
 	value?: TValueType
+	prepend: (...patches: any[]) => SanityPatchEvent
+	append: (...patches: any[]) => SanityPatchEvent
+	prefixAll: (segment: any) => SanityPatchEvent
 }
 
 export interface SanityMarker {
 	level: string
 	path: string[]
 	type: string
+}
+
+export interface SanityInputType {
+	name: string
+	fieldset?: any
+	type: {
+		jsonType: BaseTypes | string
+		name: BaseTypes | string
+		title: string
+	}
 }

@@ -1,8 +1,9 @@
-import { DynamicFieldSet } from "./DynamicFieldSet";
+import { SanityFieldObject } from "../../types/SanitySchema";
 
-export const setB: DynamicFieldSet = {
+export const setB: SanityFieldObject = {
 	title: "Set b",
-	id: "fd60c938-969b-45ae-98dd-d6578c1f5338",
+	name: "dynamicFieldSet_b",
+	type: "object",
 	fields: [
 		{
 			title: "Set b title",
@@ -10,8 +11,8 @@ export const setB: DynamicFieldSet = {
 			type: "string"
 		},
 		{
-			title: "Set b number",
-			name: "num",
+			title: "Set b value",
+			name: "dynamicFieldSet_b_value",
 			type: "number"
 		}
 	]

@@ -1,6 +1,6 @@
-import { SanityFieldObject, SanityFieldText, SanityFieldTextOptionsListItem } from "../../types/SanitySchema";
-import { DynamicFieldSet } from "../fieldsets";
-import { DynamicFieldsInput } from "./DynamicFieldsInput";
+import { SanityFieldObject } from "../../types/SanitySchema";
+import { dynamicFieldSetsByName, getFieldsFromSetNames } from "../fieldsets";
+import DynamicFieldsInput from "./DynamicFieldsInput";
 
 interface CreateDynamicFieldsFieldOptions { // yey for descriptive type names ;)
 	title: string
@@ -8,16 +8,14 @@ interface CreateDynamicFieldsFieldOptions { // yey for descriptive type names ;)
 
 	pickerTitle: string
 
-	sets: DynamicFieldSet[]
+	setNames: string[]
 }
 
 export const createDynamicFieldsField = ({
 	title,
 	name,
-
 	pickerTitle,
-
-	sets
+	setNames,
 }: CreateDynamicFieldsFieldOptions): SanityFieldObject => ({
 	title,
 	name,
@@ -25,15 +23,17 @@ export const createDynamicFieldsField = ({
 	fields: [
 		{
 			title: pickerTitle,
-			name: "setId",
+			name: "setName", // TODO: Make this dynamic
 			type: "string",
 			options: {
-				list: sets.map((set) => ({
-					title: set.title,
-					value: set.id
-				}))
+				list: (setNames.map((setName) => ({
+						title: dynamicFieldSetsByName[setName].title,
+						value: setName
+					})
+				))
 			}
-		}
+		},
+		...getFieldsFromSetNames(setNames)
 	],
-	inputComponent: DynamicFieldsInput
+	inputComponent: DynamicFieldsInput()
 })

@@ -4,6 +4,8 @@ import createSchema from 'part:@sanity/base/schema-creator'
 // Then import schema types from any plugins that might expose them
 import schemaTypes from 'all:part:@sanity/base/schema-type'
 import { container } from './container'
+import { simpleDoc } from './simpleDoc'
+import dynamicFieldSets from './fieldsets'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -13,6 +15,9 @@ export default createSchema({
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
     /* Your types here! */
-    container
+    ...dynamicFieldSets,
+
+    container,
+    simpleDoc
   ]),
 })

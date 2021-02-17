@@ -10,10 +10,8 @@ export interface DynamicFieldsSetPickerProps {
 }
 
 export const DynamicFieldsSetPicker = (props: DynamicFieldsSetPickerProps, ref: React.Ref<any>) => {
-	console.log("pickerProps", props)
-
 	const { type, value, onChange } = props
-	const { inputComponent, ...safeTypes } = type
+	const { inputComponent, ...safeTypes } = type // TODO: Figure out if removing the input component is even needed here
 
 	const onPickerChange = (patchEvent: any) => {
 		onChange(patchEvent.prefixAll(type.name))
