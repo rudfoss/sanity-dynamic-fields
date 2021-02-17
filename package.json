@@ -1,0 +1,17 @@
+{
+  "name": "sanity-dynamic-fields",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/rudfoss/sanity-dynamic-fields.git",
+  "author": "Thomas Haugland Rudfoss <thomas.rudfoss@bouvet.no>",
+  "license": "MIT",
+  "scripts": {
+    "init": "yarn && yarn --cwd ./studio",
+		"start": "yarn --cwd ./studio start",
+		"build": "yarn --cwd ./studio build",
+		"upSanity": "yarn --cwd ./studio upSanity"
+  },
+  "devDependencies": {
+    "@sanity/cli": "^2.2.6"
+  }
+}
