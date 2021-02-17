@@ -1,5 +1,6 @@
 import { SanityDocument } from "../types/SanitySchema";
 import { createDynamicFieldsField } from "./DynamicFields";
+import dynamicFieldSets from "./fieldsets";
 
 export const container: SanityDocument = {
 	title: "Container",
@@ -7,22 +8,15 @@ export const container: SanityDocument = {
 	type: "document",
 	fields: [
 		{
-			title: "Pick fields",
-			name: "pickFields",
-			type: "string",
-			options: {
-				list: [
-					{
-						title: "Set a",
-						value: "a"
-					},
-					{
-						title: "Set b",
-						value: "b"
-					}
-				]
-			}
+			title: "Title",
+			name: "title",
+			type: "string"
 		},
-		createDynamicFieldsField()
+		createDynamicFieldsField({
+			title: "Pick fields to include",
+			name: "fields",
+			pickerTitle: "Pick set",
+			sets: dynamicFieldSets
+		})
 	]
 }
