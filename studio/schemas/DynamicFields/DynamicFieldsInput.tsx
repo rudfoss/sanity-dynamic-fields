@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { DynamicFieldsSetPicker } from "./DynamicFieldsSetPicker"
 
-import PatchEvent, { set } from 'part:@sanity/form-builder/patch-event'
+import PatchEvent, { set, setIfMissing } from 'part:@sanity/form-builder/patch-event'
 import DynamicFieldSetRenderer from "./DynamicFieldSetRenderer"
 import { SanityInputType, SanityPatchEvent } from "../../types/SanitySchema"
+import { dynamicFieldSetsByName } from "../fieldsets"
 
 export interface DynamicFieldsInputProps {
 	value?: {
@@ -22,20 +23,22 @@ export const DynamicFieldsInput = (props: DynamicFieldsInputProps, ref: React.Re
 	const { value, type, onChange } = props
 	const [pickerType] = type.fields
 
+	const fieldTypes = useMemo(() => {
+		if (!value?.setName) return undefined
+		const activeFieldNames = dynamicFieldSetsByName[value.setName].fields.map((field) => field.name)
+		return type.fields.filter((fieldType) => activeFieldNames.indexOf(fieldType.name) >= 0)
+	}, [value?.setName, type.fields])
+
 	const onPatch = (patchEvent: SanityPatchEvent) => {
-		if (value === undefined) {
-			// For some reason this has to be here, otherwise the component will not react when the set picker
-			// is initially set
-			// TODO: Figure out why this has to be set
-			onChange(PatchEvent.from(set({})))
-		}
-		onChange(patchEvent)
+		onChange(patchEvent.prepend(setIfMissing({type: type.name})))
 	}
 
 	console.log("props", props)
 	return <div>
 		<DynamicFieldsSetPicker value={value?.setName} onChange={onPatch} type={pickerType} />
-		<DynamicFieldSetRenderer value={value} onChange={onPatch} allFieldTypes={type.fields} />
+		{fieldTypes && (
+			<DynamicFieldSetRenderer value={value as any} onChange={onPatch} fieldTypes={fieldTypes} />
+		)}
 	</div>
 }
 
