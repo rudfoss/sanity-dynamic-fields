@@ -15,8 +15,8 @@ export const getFieldsFromSetNames = (setNames: string[]) => {
 		const set = dynamicFieldSetsByName[setName]
 		for (const field of set.fields) {
 			const currentField = fieldsByName.get(field.name)
-			if (currentField && currentField.type !== field.type) {
-				throw new Error(`Two fields from the set ["${setNames.join('", "')}"] have the same name "${field.name}", but different types "${currentField.type}" vs "${field.type}". Overlapping names MUST be of the same type. Use prefixed names to distinguish them.`)
+			if (currentField) {
+				throw new Error(`Two fields from the set ["${setNames.join('", "')}"] have the same name "${field.name}". This can cause rendering issues in Sanity Studio. Please provide unique names.`)
 			}
 			fieldsByName.set(field.name, field)
 		}

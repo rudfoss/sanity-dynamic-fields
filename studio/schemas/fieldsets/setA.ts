@@ -1,6 +1,7 @@
 import { SanityFieldObject } from "../../types/SanitySchema";
+import { createDynamicFieldSet } from "./createDynamicFieldSet";
 
-export const setA: SanityFieldObject = {
+export const setA = createDynamicFieldSet({
 	title: "Set a",
 	name: "dynamicFieldSet_a",
 	type: "object",
@@ -8,7 +9,9 @@ export const setA: SanityFieldObject = {
 		{
 			title: "Set a title",
 			name: "title",
-			type: "string"
+			type: "string",
+			description: "Give this field a friendly title",
+			validation: (rule) => rule.required()
 		},
 		{
 			title: "Set a value",
@@ -16,4 +19,4 @@ export const setA: SanityFieldObject = {
 			type: "boolean"
 		}
 	]
-}
+})

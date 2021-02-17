@@ -1,6 +1,7 @@
 import { SanityFieldObject } from "../../types/SanitySchema";
+import { createDynamicFieldSet } from "./createDynamicFieldSet";
 
-export const setB: SanityFieldObject = {
+export const setB = createDynamicFieldSet({
 	title: "Set b",
 	name: "dynamicFieldSet_b",
 	type: "object",
@@ -8,7 +9,8 @@ export const setB: SanityFieldObject = {
 		{
 			title: "Set b title",
 			name: "title",
-			type: "string"
+			type: "string",
+			description: "This is a different title"
 		},
 		{
 			title: "Set b value",
@@ -16,4 +18,4 @@ export const setB: SanityFieldObject = {
 			type: "number"
 		}
 	]
-}
+})
