@@ -1,7 +1,7 @@
 import React, { useMemo } from "react"
 
 import { FormBuilderInput } from 'part:@sanity/form-builder'
-import { SanityInputType } from "../../types/SanitySchema"
+import { SanityInputType, SanityPatchEvent } from "../../types/SanitySchema"
 import { dynamicFieldSetsByName } from "../fieldsets"
 
 interface DynamicFieldSetRendererProps {
@@ -24,8 +24,8 @@ export const DynamicFieldSetRenderer = (props: DynamicFieldSetRendererProps, ref
 		return allFieldTypes.filter((fieldType) => activeFieldNames.indexOf(fieldType.name) >= 0)
 	}, [value?.setName, allFieldTypes])
 
-	const onFieldChange = (field: SanityInputType) => (patchEvent: any) => {
-		console.log("dynamicFieldPatch", field, patchEvent)
+	const onFieldChange = (field: SanityInputType) => (patchEvent: SanityPatchEvent) => {
+		onChange(patchEvent.prefixAll(field.name))
 	}
 
 	console.log("fieldTypes", fieldTypes, allFieldTypes)
@@ -34,6 +34,7 @@ export const DynamicFieldSetRenderer = (props: DynamicFieldSetRendererProps, ref
 		<div>
 			{fieldTypes.map((field) => (
 				<FormBuilderInput
+					key={field.name}
 					{...field}
 					value={value[field.name]}
 					onChange={onFieldChange(field)}

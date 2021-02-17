@@ -22,7 +22,7 @@ export const DynamicFieldsInput = (props: DynamicFieldsInputProps, ref: React.Re
 	const { value, type, onChange } = props
 	const [pickerType] = type.fields
 
-	const onPickerChange = (patchEvent: SanityPatchEvent) => {
+	const onPatch = (patchEvent: SanityPatchEvent) => {
 		if (value === undefined) {
 			// For some reason this has to be here, otherwise the component will not react when the set picker
 			// is initially set
@@ -32,14 +32,10 @@ export const DynamicFieldsInput = (props: DynamicFieldsInputProps, ref: React.Re
 		onChange(patchEvent)
 	}
 
-	const onDynamicFieldChange = (patchEvent: SanityPatchEvent) => {
-		console.log("dynamicFieldPatchEvent", patchEvent)
-	}
-
 	console.log("props", props)
 	return <div>
-		<DynamicFieldsSetPicker value={value?.setName} onChange={onPickerChange} type={pickerType} />
-		<DynamicFieldSetRenderer value={value} onChange={onDynamicFieldChange} allFieldTypes={type.fields} />
+		<DynamicFieldsSetPicker value={value?.setName} onChange={onPatch} type={pickerType} />
+		<DynamicFieldSetRenderer value={value} onChange={onPatch} allFieldTypes={type.fields} />
 	</div>
 }
 
